@@ -16,7 +16,6 @@ function App() {
   function updateTrackerSymbol(newValue){
     setTrackerSymbol(newValue);
     setInputBoxDisabled(true);
-
   }
 
   function clearData(){
@@ -34,9 +33,10 @@ function App() {
 
   async function handleSubmit(event){
       event.preventDefault();
+      const query = userInput;
       clearData();
       
-      const url = `https://financialmodelingprep.com/api/v3/search?query=${userInput}&exchange=NASDAQ&exchange=NYSE&exchange=TSX&exchange=AMEX&apikey=yTBhAhVuKXSadNt9DrH80oZ5DNReYcXk`
+      const url = `https://financialmodelingprep.com/api/v3/search?query=${query}&exchange=NASDAQ&exchange=NYSE&exchange=TSX&exchange=AMEX&apikey=yTBhAhVuKXSadNt9DrH80oZ5DNReYcXk`
       
       try{
           const response = await axios.get(url);
@@ -51,8 +51,6 @@ function App() {
           }
           else{
             setErrorMessage("Error with Data")          }
-
-          console.log(response)
       }
       
       catch (err){

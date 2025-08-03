@@ -9,22 +9,25 @@ export default function ShowData(props){
     const [results, setResults] = useState(null);
     const [ApiError, setApiError] = useState(null);
 
-    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${trackerSymbol.symbol}&outputsize=compact&apikey=${apiKey}`;
-   
+    const url2 = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${trackerSymbol.symbol}&outputsize=compact&apikey=${apiKey}`;
+  
     React.useEffect(()=>{
         const fetchData = async () =>{
             try{
-                const response = await axios.get(url);
-                let tempArray = response.data['Time Series (Daily)'];
+                const response = await axios.get(url2);
+                console.log(response)
                 
-                const newArray = Object.entries(tempArray).map(([date, values]) => {
+                let tempArray2 = response.data['Weekly Adjusted Time Series'];
+
+                const newArray = Object.entries(tempArray2).map(([date, values]) => {
                     return {
                         Date: date,
-                        Open: values["1. open"]
+                        Close: values["5. adjusted close"]
                     }
                 });
-                setResults(newArray);
 
+                newArray.reverse();
+                setResults(newArray);
             }
             catch(err){
                 setApiError('Error fetching data')
@@ -33,6 +36,7 @@ export default function ShowData(props){
         fetchData();
         
     }, []);    
+    
 
     return(
         <div className="searchBox">
@@ -48,7 +52,7 @@ export default function ShowData(props){
 
             {ApiError && <h3>{ApiError}</h3>}
 
-            <h2>{`${trackerSymbol['name']} Opening Day Price Chart`}</h2>
+            <h2>{`${trackerSymbol['name']} Weekly Adjusted Close Results Over 20 Years`}</h2>
 
             {results && <LineChart data={results} name={trackerSymbol['name']}/>}
 

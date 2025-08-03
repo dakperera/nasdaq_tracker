@@ -9,8 +9,8 @@ const LineChart = ( { data, name }) => {
     const chartData = {
         labels: data.map(point => point.Date), // x-axis: dates
         datasets: [{
-            label: `${name} Opening Price For The Last 100 Days`,
-            data: data.map(point => point.Open), //y-axis: open prices
+            label: `${name} Weekly Adjusted Close Results Over 20 Years`,
+            data: data.map(point => point.Close), //y-axis: open prices
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1
